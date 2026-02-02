@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\PostController;
 use Illuminate\Support\Facades\Route;
 
 // Landing Page
@@ -16,10 +17,16 @@ Route::middleware('auth')->group(function () {
 
 
 // Admin
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin', function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/', function () {
         return view('admin.dashboard');
     });
+
+    Route::get('/posts', [PostController::class, 'index']);
+    Route::get('/posts/create', [PostController::class, 'create']);
+    Route::post('/posts', [PostController::class, 'store']);
 });
+
+
 
 require __DIR__.'/auth.php';
