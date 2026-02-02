@@ -1,17 +1,22 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('admin.layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("Disini tempat admin mengedit halaman web utama, YANG ADMIN ADMIN AJA") }}
-                </div>
-            </div>
+@section('content')
+    <h1 class="text-2xl font-bold mb-4">Admin Dashboard</h1>
+
+    <div class="grid grid-cols-3 gap-4">
+        <div class="bg-white p-4 rounded shadow">
+            <p class="text-gray-500">Users</p>
+            <p class="text-2xl font-bold">—</p>
+        </div>
+
+        <div class="bg-white p-4 rounded shadow">
+            <p class="text-gray-500">Posts</p>
+            <p class="text-2xl font-bold">—</p>
+        </div>
+
+        <div class="bg-white p-4 rounded shadow">
+            <p class="text-gray-500">Comments</p>
+            <p class="text-2xl font-bold">—</p>
         </div>
     </div>
-</x-app-layout>
+@endsection
