@@ -42,5 +42,10 @@ class PostController extends Controller
 
         return redirect('/admin/posts')->with('success', 'Post Created!');
     }
+
+    public function show(Post $post)
+    {
+        return view('admin.posts.show', compact('post'));
+    }
 }
 
