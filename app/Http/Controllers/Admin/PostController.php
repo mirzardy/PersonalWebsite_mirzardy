@@ -47,5 +47,35 @@ class PostController extends Controller
     {
         return view('admin.posts.show', compact('post'));
     }
+
+   public function edit(Post $post)
+    {
+        return view('admin.posts.edit', compact('post'));
+    }
+
+    public function update(Request $request, Post $post)
+    {
+        $data = $request->validate([
+            'title' => 'required|max:48',
+            'excerpt' => 'required|max:255',
+            'content' => 'required',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg'
+        ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('posts', 'public');
+        }
+
+        $post->update($data);
+
+        return redirect()->route('admin.posts.index')->with('success', 'Post Berhasil diupdate');
+    }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+
+        return redirect()->route('admin.posts.index')->with('success', 'Post berhasil dihapus');
+    }
 }
 

@@ -17,16 +17,19 @@ Route::middleware('auth')->group(function () {
 
 
 // Admin
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    });
+Route::middleware(['auth', 'admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
 
-    Route::get('/posts', [PostController::class, 'index']);
-    Route::get('/posts/create', [PostController::class, 'create']);
-    Route::post('/posts', [PostController::class, 'store']);
-    Route::get('/posts/{post}', [PostController::class, 'show']);
+        Route::get('/', function () {
+            return view('admin.dashboard');
+        });
+
+        Route::resource('posts', PostController::class);
+        Route::get('/posts/{post}', [PostController::class, 'show']);
 });
+
 
 
 

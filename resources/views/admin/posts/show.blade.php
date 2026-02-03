@@ -38,13 +38,13 @@
                 </div>
 
                 {{-- ACTIONS --}}
-                <div class="flex gap-4 mt-6 pt-4 border-t">
-                    <a href="/admin/posts/{{ $post->id }}/edit"
-                       class="px-4 py-2 bg-gray-800 text-white rounded text-sm">
+                <div class="flex gap-4 text-sm mt-auto pt-2">
+                    <a href="{{ route('admin.posts.edit', $post->id) }}" method="post"
+                        class="px-4 py-2 bg-gray-800 text-white rounded text-sm">
                         Edit
                     </a>
 
-                    <form method="POST" action="/admin/posts/{{ $post->id }}">
+                    <form method="POST" action="{{ route('admin.posts.destroy', $post->id) }}">
                         @csrf
                         @method('DELETE')
                         <button
@@ -54,10 +54,8 @@
                         </button>
                     </form>
                 </div>
-
             </div>
         </div>
-
     </div>
 </div>
 @endsection
