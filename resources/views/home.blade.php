@@ -1,44 +1,47 @@
-@php use Illuminate\Support\Str; @endphp
+@extends('layouts.app')
 
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Home
-        </h2>
-    </x-slot>
+@section('content')
+<h1 class="text-2xl font-bold mb-6">Latest Posts</h1>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+<div class="grid md:grid-cols-2 gap-6">
+    @forelse ($posts as $post)
+        <div class="bg-white rounded shadow overflow-hidden">
 
-            <!-- contoh konten -->
-            @foreach($posts as $post)
-            <article class="mb-6">
-                <img src="{{ asset('storage/' . $post->image) }}" class="w-full h-48 object-cover">
+            {{-- Image --}}
+            @if ($post->image)
+                <img src="{{ asset('storage/' . $post->image) }}"
+                     class="w-full h-48 object-cover"
+                     alt="{{ $post->title }}">
+            @endif
+
+            <div class="p-4 space-y-2">
+                <h2 class="text-lg font-semibold">
+                    {{ $post->title }}
+                </h2>
 
                 <p class="text-sm text-gray-500">
-                    {{ $post->created_at->format('d M Y') }}
+                    Diposting: {{ $post->created_at->format('d M Y') }}
+
+                    {{-- TAMPILKAN UPDATE JIKA ADA --}}
+                    @if ($post->updated_at->gt($post->created_at))
+                        <span class="italic text-gray-400">
+                            • Diupdate: {{ $post->updated_at->format('d M Y') }}
+                        </span>
+                    @endif
                 </p>
 
-                <h2 class="text-xl font-bold">{{ $post->title }}</h2>
+                <p class="text-gray-700 text-sm">
+                    {{ $post->excerpt }}
+                </p>
 
-                <p>{{ $post->excerpt }}</p>
-
-            </article>
-
-            <!-- FITUR KHUSUS VISITOR -->
-                @auth
-                    <div class="mt-4 flex gap-4">
-                        <button class="text-blue-600">👍 Like</button>
-                        <button class="text-green-600">💬 Comment</button>
-                    </div>
-                @else
-                    <p class="mt-4 text-sm text-gray-500">
-                        Login untuk like dan komentar
-                    </p>
-                @endauth
-            @endforeach
-
+                <a href="{{ route('posts.show', $post->slug) }}"
+                   class="inline-block text-sm text-blue-600 hover:underline">
+                    Baca selengkapnya →
+                </a>
             </div>
         </div>
-    </div>
-</x-app-layout>
+    @empty
+        <p class="text-gray-500">Belum ada post.</p>
+    @endforelse
+</div>
+@endsection

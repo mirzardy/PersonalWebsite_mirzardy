@@ -4,9 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\PostController;
 use Illuminate\Support\Facades\Route;
-
-// Landing Page
-Route::get('/', [HomeController::class, 'index'])->name('home');
+use App\Models\Post;
 
 // Auth Login
 Route::middleware('auth')->group(function () {
@@ -27,10 +25,13 @@ Route::middleware(['auth', 'admin'])
         });
 
         Route::resource('posts', PostController::class);
-        Route::get('/posts/{post}', [PostController::class, 'show']);
 });
 
-
+// Public
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/posts/{post:slug}', function (Post $post) {
+    return view('posts.show', compact('post'));
+})->name('posts.show');
 
 
 require __DIR__.'/auth.php';
