@@ -28,7 +28,7 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main style="padding-top: 64px;">
                 @yield('content')
             </main>
         </div>
