@@ -41,6 +41,10 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <div class="px-4">
+                            <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                            <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                        </div>
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
@@ -99,12 +103,17 @@
                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
-            @endauth
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+
+                @if (Auth::user()->isAdmin())
+                    <x-responsive-nav-link href="/admin">
+                        Dashboard Admin
+                    </x-responsive-nav-link>
+                @endif
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
@@ -117,6 +126,16 @@
                     </x-responsive-nav-link>
                 </form>
             </div>
+            @else
+            <div class="mt-3 space-y-1">
+                <x-responsive-nav-link :href="route('login')">
+                    {{ __('Login') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('register')">
+                    {{ __('Register') }}
+                </x-responsive-nav-link>
+            </div>
+            @endauth
         </div>
     </div>
 </nav>
