@@ -216,8 +216,119 @@
     </tbody>
 </table>
 
+{{-- EXPERIENCE --}}
+<hr class="my-12">
+<h2 class="text-xl font-bold mb-4">Experience</h2>
+
+@if (session('experience_success'))
+    <div class="mb-4 text-green-600">{{ session('experience_success') }}</div>
+@endif
+
+<form id="experienceForm"
+      action="{{ route('admin.portfolio-experiences.store') }}"
+      method="POST"
+      class="grid grid-cols-2 gap-3 max-w-3xl mb-6">
+    @csrf
+    <input type="hidden" name="_method" value="POST">
+    <input type="hidden" id="experience_id">
+
+    <input name="company" id="company"
+           placeholder="Nama Perusahaan"
+           class="border rounded p-2 col-span-2" required>
+
+    <input name="position" id="position"
+           placeholder="Posisi / Jabatan"
+           class="border rounded p-2">
+
+    <input name="type" id="type"
+           placeholder="Tipe (Full-time, Internship)"
+           class="border rounded p-2">
+
+    <textarea name="description" id="description"
+              placeholder="Deskripsi pekerjaan"
+              class="border rounded p-2 col-span-2"
+              rows="3"></textarea>
+
+    <input name="start_year" id="exp_start_year"
+           placeholder="Mulai"
+           class="border rounded p-2">
+
+    <input name="end_year" id="exp_end_year"
+           placeholder="Selesai"
+           class="border rounded p-2">
+
+    <input type="hidden" name="is_current" value="0">
+
+    <label class="flex items-center gap-2 col-span-2">
+        <input type="checkbox" name="is_current" id="exp_is_current" value="1">
+        Masih bekerja
+    </label>
+
+    <div class="col-span-2 flex gap-2">
+        <button class="bg-blue-600 text-black py-2 rounded flex-1"
+                id="expSubmitBtn">
+            Simpan
+        </button>
+
+        <button type="button"
+                class="bg-gray-300 text-black py-2 rounded flex-1 hidden"
+                id="expCancelBtn"
+                onclick="cancelExperienceEdit()">
+            Batal
+        </button>
+    </div>
+</form>
+
+{{-- LIST EXPERIENCE --}}
+<table class="w-full max-w-4xl border border-gray-200 text-sm">
+    <thead class="bg-gray-100">
+        <tr>
+            <th class="border px-3 py-2">Perusahaan</th>
+            <th class="border px-3 py-2">Posisi</th>
+            <th class="border px-3 py-2">Tahun</th>
+            <th class="border px-3 py-2 w-28">Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($experiences as $exp)
+        <tr>
+            <td class="border px-3 py-2">
+                <div class="font-medium">{{ $exp->company }}</div>
+                <div class="text-xs text-gray-500">{{ $exp->type }}</div>
+            </td>
+            <td class="border px-3 py-2">
+                {{ $exp->position }}
+            </td>
+            <td class="border px-3 py-2">
+                {{ $exp->start_year }} -
+                {{ $exp->is_current ? 'Sekarang' : $exp->end_year }}
+            </td>
+            <td class="border px-3 py-2 text-center">
+                <button type="button"
+                        class="text-blue-600 text-sm"
+                        onclick='editExperience(@json($exp))'>
+                    Edit
+                </button>
+
+                <form action="{{ route('admin.portfolio-experiences.destroy', $exp) }}"
+                      method="POST"
+                      class="inline"
+                      onsubmit="return confirm('Hapus experience ini?')">
+                    @csrf
+                    @method('DELETE')
+                    <button class="text-red-600 text-sm ml-2">
+                        Hapus
+                    </button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+
 @endsection
 
+{{-- JS for Education --}}
 <script>
 function editEducation(data) {
     document.getElementById('education_id').value = data.id;
@@ -252,3 +363,38 @@ function cancelEdit() {
 }
 
 </script>
+
+{{-- JS for Experience --}}
+<script>
+function editExperience(data) {
+    document.getElementById('experience_id').value = data.id;
+    document.getElementById('company').value = data.company;
+    document.getElementById('position').value = data.position ?? '';
+    document.getElementById('type').value = data.type ?? '';
+    document.getElementById('description').value = data.description ?? '';
+    document.getElementById('exp_start_year').value = data.start_year ?? '';
+    document.getElementById('exp_end_year').value = data.end_year ?? '';
+    document.getElementById('exp_is_current').checked = data.is_current;
+
+    const form = document.getElementById('experienceForm');
+    form.action = `/admin/portfolio-experiences/${data.id}`;
+    form.querySelector('input[name="_method"]').value = 'PUT';
+
+    document.getElementById('expSubmitBtn').innerText = 'Update';
+    document.getElementById('expCancelBtn').classList.remove('hidden');
+
+    window.scrollTo({ top: form.offsetTop - 100, behavior: 'smooth' });
+}
+
+function cancelExperienceEdit() {
+    const form = document.getElementById('experienceForm');
+
+    form.reset();
+    form.action = "{{ route('admin.portfolio-experiences.store') }}";
+    form.querySelector('input[name="_method"]').value = 'POST';
+
+    document.getElementById('expSubmitBtn').innerText = 'Simpan';
+    document.getElementById('expCancelBtn').classList.add('hidden');
+}
+</script>
+

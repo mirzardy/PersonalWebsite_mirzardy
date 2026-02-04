@@ -37,11 +37,11 @@
             <a href="/" class="block px-4 py-2 rounded hover:bg-gray-100">
                 Home
             </a>
-            <a href="/admin/posts" class="block px-4 py-2 rounded hover:bg-gray-100">
-                Post
-            </a>
             <a href="/admin/portfolio" class="block px-4 py-2 rounded hover:bg-gray-100">
                 Portfolio
+            </a>
+            <a href="/admin/posts" class="block px-4 py-2 rounded hover:bg-gray-100">
+                Post
             </a>
         </nav>
     </aside>

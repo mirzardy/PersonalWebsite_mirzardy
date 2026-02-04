@@ -100,6 +100,43 @@
     </div>
 </section>
 
+{{-- EXPERIENCE --}}
+<section class="mt-16">
+    <h2 class="text-2xl font-bold mb-6">Experience</h2>
+
+    <div class="space-y-6">
+        @forelse ($experiences as $exp)
+            <div class="border-l-4 border-green-500 pl-4">
+                <h3 class="font-semibold text-lg">
+                    {{ $exp->position ?? '—' }}
+                </h3>
+
+                <p class="text-sm text-gray-600">
+                    {{ $exp->company }}
+                    @if ($exp->type)
+                        • {{ $exp->type }}
+                    @endif
+                </p>
+
+                <p class="text-sm text-gray-500 mb-2">
+                    {{ $exp->start_year }}
+                    —
+                    {{ $exp->is_current ? 'Sekarang' : $exp->end_year }}
+                </p>
+
+                @if ($exp->description)
+                    <p class="text-gray-600 text-sm">
+                        {{ $exp->description }}
+                    </p>
+                @endif
+            </div>
+        @empty
+            <p class="text-gray-500">Experience belum ditambahkan</p>
+        @endforelse
+    </div>
+</section>
+
+
 {{-- POSTS (KECIL AJA) --}}
 <section id="posts" class="mt-20">
     <div class="flex justify-between items-center mb-6">

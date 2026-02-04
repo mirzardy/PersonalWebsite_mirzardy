@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\PortfolioProfileController;
 use App\Http\Controllers\Admin\PortfolioSkillController;
 use App\Http\Controllers\Admin\PortfolioEducationController;
+use App\Http\Controllers\Admin\PortfolioExperienceController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 
@@ -40,6 +41,8 @@ Route::middleware(['auth', 'admin'])
         Route::resource('portfolio-educations', PortfolioEducationController::class)
             ->except(['index', 'create', 'edit', 'show']);
 
+        Route::resource('portfolio-experiences',PortfolioExperienceController::class)
+            ->except(['create', 'edit', 'show']);
 });
 
 // Public
