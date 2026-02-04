@@ -30,7 +30,7 @@ class PortfolioProfileController extends Controller
             'name' => 'required',
             'headline' => 'nullable',
             'about' => 'nullable',
-            'photo' => 'nullable|image|max:2048',
+            'photo' => 'nullable|image|max:4096',
             'cv' => 'nullable|mimes:pdf|max:5120',
             'address' => 'nullable',
         ]);

@@ -7,6 +7,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -74,6 +75,7 @@ class PostController extends Controller
         }
 
         if ($request->hasFile('image')) {
+            // simpan file baru
             $data['image'] = $request->file('image')->store('posts', 'public');
         }
 
@@ -89,4 +91,3 @@ class PostController extends Controller
         return redirect()->route('admin.posts.index')->with('success', 'Post berhasil dihapus');
     }
 }
-
