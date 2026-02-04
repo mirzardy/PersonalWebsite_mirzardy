@@ -5,6 +5,21 @@
     <title>Admin Dashboard</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+<script>
+    // Simpan posisi scroll sebelum submit
+    document.addEventListener('submit', function () {
+        localStorage.setItem('scrollY', window.scrollY);
+    });
+
+    // Kembalikan posisi scroll setelah reload
+    window.addEventListener('load', function () {
+        const scrollY = localStorage.getItem('scrollY');
+        if (scrollY !== null) {
+            window.scrollTo(0, scrollY);
+            localStorage.removeItem('scrollY');
+        }
+    });
+</script>
 <body class="bg-gray-100">
 
 <div class="min-h-screen flex">

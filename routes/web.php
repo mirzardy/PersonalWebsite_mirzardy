@@ -6,7 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\PortfolioProfileController;
 use App\Http\Controllers\Admin\PortfolioSkillController;
-use App\Models\Portfolio\PortfolioSkill;
+use App\Http\Controllers\Admin\PortfolioEducationController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 
@@ -36,6 +36,10 @@ Route::middleware(['auth', 'admin'])
                 'portfolio-skill' => 'skill'
             ])
             ->except(['create', 'edit', 'show']);
+
+        Route::resource('portfolio-educations', PortfolioEducationController::class)
+            ->except(['index', 'create', 'edit', 'show']);
+
 });
 
 // Public

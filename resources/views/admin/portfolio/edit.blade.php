@@ -53,6 +53,7 @@
     </button>
 </form>
 
+{{-- SKILLS --}}
 <hr class="my-10">
 <h2 class="text-xl font-bold mb-4">Skills</h2>
 @if (session('skill_success'))
@@ -69,7 +70,7 @@
     <input type="number" name="level" placeholder="Level %"
            class="border rounded p-2 w-28">
 
-    <button class="px-4 py-2 bg-green-600 text-white rounded">
+    <button class="px-4 py-2 bg-green-600 text-black rounded">
         Tambah
     </button>
 </form>
@@ -113,4 +114,141 @@
 @endforelse
 </div>
 
+{{-- EDUCATION --}}
+<hr class="my-12">
+<h2 class="text-xl font-bold mb-4">Education</h2>
+{{-- FORM --}}
+<form id="educationForm"
+      action="{{ route('admin.portfolio-educations.store') }}"
+      method="POST"
+      class="grid grid-cols-2 gap-3 max-w-2xl mb-6">
+    @csrf
+    <input type="hidden" name="_method" value="POST">
+    <input type="hidden" name="education_id" id="education_id">
+
+    <input name="school" id="school" placeholder="Universitas / Sekolah"
+           class="border rounded p-2 col-span-2" required>
+
+    <input name="degree" id="degree" placeholder="Degree (S1, SMA)"
+           class="border rounded p-2">
+
+    <input name="field" id="field" placeholder="Jurusan"
+           class="border rounded p-2">
+
+    <input name="start_year" id="start_year" placeholder="Mulai"
+           class="border rounded p-2">
+    @error('start_year')
+        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+    @enderror
+
+    <input name="end_year" id="end_year" placeholder="Selesai"
+           class="border rounded p-2">
+    @error('end_year')
+        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+    @enderror
+
+    <input type="hidden" name="is_current" value="0">
+
+    <label class="flex items-center gap-2">
+        <input type="checkbox" name="is_current" id="is_current" value="1">
+        Masih menempuh
+    </label>
+
+    <div class="col-span-2 flex gap-2">
+        <button class="bg-blue-600 text-black py-2 rounded flex-1"
+                id="submitBtn">
+            Simpan
+        </button>
+
+        <button type="button"
+                class="bg-gray-300 text-black py-2 rounded flex-1 hidden"
+                id="cancelBtn"
+                onclick="cancelEdit()">
+            Batal
+        </button>
+    </div>
+
+</form>
+
+
+{{-- LIST --}}
+<table class="w-full max-w-3xl border border-gray-200 text-sm">
+    <thead class="bg-gray-100">
+        <tr>
+            <th class="border px-3 py-2">Sekolah</th>
+            <th class="border px-3 py-2">Jurusan</th>
+            <th class="border px-3 py-2">Tahun</th>
+            <th class="border px-3 py-2 w-28">Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($educations as $edu)
+        <tr>
+            <td class="border px-3 py-2">
+                <div class="font-medium">{{ $edu->school }}</div>
+                <div class="text-gray-500 text-xs">{{ $edu->degree }}</div>
+            </td>
+            <td class="border px-3 py-2">{{ $edu->field }}</td>
+            <td class="border px-3 py-2">
+                {{ $edu->start_year }} -
+                {{ $edu->is_current ? 'Sekarang' : $edu->end_year }}
+            </td>
+            <td class="border px-3 py-2 text-center">
+                <button type="button"
+                        class="text-blue-600 text-sm"
+                        onclick='editEducation(@json($edu))'>
+                    Edit
+                </button>
+
+                <form action="{{ route('admin.portfolio-educations.destroy', $edu) }}"
+                      method="POST"
+                      class="inline"
+                      onsubmit="return confirm("Hapus education?")">
+                    @csrf
+                    @method('DELETE')
+                    <button class="text-red-600 text-sm ml-2">
+                        Hapus
+                    </button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+
 @endsection
+
+<script>
+function editEducation(data) {
+    document.getElementById('education_id').value = data.id;
+    document.getElementById('school').value = data.school;
+    document.getElementById('degree').value = data.degree ?? '';
+    document.getElementById('field').value = data.field ?? '';
+    document.getElementById('start_year').value = data.start_year ?? '';
+    document.getElementById('end_year').value = data.end_year ?? '';
+    document.getElementById('is_current').checked = data.is_current;
+
+    const form = document.getElementById('educationForm');
+    form.action = `/admin/portfolio-educations/${data.id}`;
+    form.querySelector('input[name="_method"]').value = 'PUT';
+
+    document.getElementById('submitBtn').innerText = 'Update';
+    document.getElementById('cancelBtn').classList.remove('hidden');
+
+    window.scrollTo({ top: form.offsetTop - 100, behavior: 'smooth' });
+}
+
+function cancelEdit() {
+    const form = document.getElementById('educationForm');
+
+    form.reset();
+
+    document.getElementById('education_id').value = '';
+    form.action = "{{ route('admin.portfolio-educations.store') }}";
+    form.querySelector('input[name="_method"]').value = 'POST';
+
+    document.getElementById('submitBtn').innerText = 'Simpan';
+    document.getElementById('cancelBtn').classList.add('hidden');
+}
+
+</script>

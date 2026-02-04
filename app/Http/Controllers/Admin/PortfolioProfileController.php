@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Portfolio\PortfolioEducation;
 use App\Models\Portfolio\PortfolioProfile;
 use App\Models\Portfolio\PortfolioSkill;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ class PortfolioProfileController extends Controller
         return view('admin.portfolio.edit', [
         'profile' => PortfolioProfile::firstOrFail(),
         'skills'  => PortfolioSkill::orderBy('order')->get(),
+        'educations' => PortfolioEducation::orderBy('order')->get(),
     ]);
     }
 

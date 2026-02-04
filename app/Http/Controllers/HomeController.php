@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Portfolio\PortfolioEducation;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Portfolio\PortfolioProfile;
@@ -13,8 +14,10 @@ class HomeController extends Controller
     {
         $profile = PortfolioProfile::first();
         $skills = PortfolioSkill::orderBy('order')->get();
+        $educations = PortfolioEducation::orderBy('order')->get();
+
         $posts = Post::latest()->limit(3)->get();
 
-        return view('home', compact('profile', 'skills','posts'));
+        return view('home', compact('profile', 'skills', 'educations', 'posts'));
     }
 }

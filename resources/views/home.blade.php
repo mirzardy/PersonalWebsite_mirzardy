@@ -70,10 +70,40 @@
     </div>
 </section>
 
+{{-- EDUCATION --}}
+<section class="mt-16">
+    <h2 class="text-2xl font-bold mb-6">Education</h2>
+
+    <div class="space-y-5">
+        @forelse ($educations as $edu)
+            <div class="border-l-4 border-blue-500 pl-4">
+                <h3 class="font-semibold text-lg">
+                    {{ $edu->school }}
+                </h3>
+
+                <p class="text-sm text-gray-600">
+                    {{ $edu->degree }}
+                    @if ($edu->field)
+                        — {{ $edu->field }}
+                    @endif
+                </p>
+
+                <p class="text-sm text-gray-500">
+                    {{ $edu->start_year }}
+                    —
+                    {{ $edu->is_current ? 'Sekarang' : $edu->end_year }}
+                </p>
+            </div>
+        @empty
+            <p class="text-gray-500">Education belum ditambahkan</p>
+        @endforelse
+    </div>
+</section>
+
 {{-- POSTS (KECIL AJA) --}}
 <section id="posts" class="mt-20">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold">Tulisan Terbaru</h2>
+        <h2 class="text-2xl font-bold">Post Terbaru</h2>
         <a href="{{ route('posts.index') }}"
            class="text-sm text-blue-600 hover:underline">
             Lihat semua →
