@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\PortfolioProfileController;
 use App\Http\Controllers\Admin\PortfolioSkillController;
 use App\Http\Controllers\Admin\PortfolioEducationController;
 use App\Http\Controllers\Admin\PortfolioExperienceController;
+use App\Http\Controllers\Admin\PortfolioLanguageController;
+use App\Http\Controllers\Admin\PortfolioHobbyController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 
@@ -43,6 +45,14 @@ Route::middleware(['auth', 'admin'])
 
         Route::resource('portfolio-experiences',PortfolioExperienceController::class)
             ->except(['create', 'edit', 'show']);
+
+        Route::resource('portfolio-languages', PortfolioLanguageController::class)
+            ->except(['create','edit','show']);
+
+        Route::resource('portfolio-hobbies', PortfolioHobbyController::class)
+            ->except(['create','edit','show']);
+
+
 });
 
 // Public

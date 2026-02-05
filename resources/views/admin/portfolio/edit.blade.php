@@ -326,6 +326,142 @@
     </tbody>
 </table>
 
+{{-- LANGUAGES --}}
+<hr class="my-12">
+<h2 class="text-xl font-bold mb-4">Languages</h2>
+
+@if (session('language_success'))
+    <div class="mb-4 text-green-600">
+        {{ session('language_success') }}
+    </div>
+@endif
+
+{{-- FORM TAMBAH --}}
+<form action="{{ route('admin.portfolio-languages.store') }}"
+      method="POST"
+      class="flex gap-3 mb-6 max-w-xl">
+    @csrf
+
+    <input name="name"
+           placeholder="Bahasa"
+           class="border rounded p-2 flex-1"
+           required>
+
+    <input name="level"
+           placeholder="Level (Fluent, Intermediate)"
+           class="border rounded p-2 w-48">
+
+    <button class="px-4 py-2 bg-green-600 text-black rounded">
+        Tambah
+    </button>
+</form>
+
+{{-- LIST --}}
+<div class="space-y-3 max-w-xl">
+@forelse ($languages as $lang)
+    <div class="flex items-center gap-2">
+
+        {{-- UPDATE --}}
+        <form action="{{ route('admin.portfolio-languages.update', $lang) }}"
+              method="POST"
+              class="flex gap-2 flex-1">
+            @csrf
+            @method('PUT')
+
+            <input name="name"
+                   value="{{ $lang->name }}"
+                   class="border rounded p-2 flex-1">
+
+            <input name="level"
+                   value="{{ $lang->level }}"
+                   class="border rounded p-2 w-40">
+
+            <button class="text-blue-600 text-sm">
+                Update
+            </button>
+        </form>
+
+        {{-- DELETE --}}
+        <form action="{{ route('admin.portfolio-languages.destroy', $lang) }}"
+              method="POST"
+              onsubmit="return confirm('Hapus language ini?')">
+            @csrf
+            @method('DELETE')
+            <button class="text-red-600 text-sm">
+                Hapus
+            </button>
+        </form>
+
+    </div>
+@empty
+    <p class="text-gray-500">Belum ada language.</p>
+@endforelse
+</div>
+
+{{-- HOBBY --}}
+<hr class="my-12">
+<h2 class="text-xl font-bold mb-4">Hobbies</h2>
+
+@if (session('hobby_success'))
+    <div class="mb-4 text-green-600">
+        {{ session('hobby_success') }}
+    </div>
+@endif
+
+{{-- FORM TAMBAH --}}
+<form action="{{ route('admin.portfolio-hobbies.store') }}"
+      method="POST"
+      class="flex gap-3 mb-6 max-w-xl">
+    @csrf
+
+    <input name="name"
+           placeholder="Nama hobby"
+           class="border rounded p-2 flex-1"
+           required>
+
+    <button class="px-4 py-2 bg-green-600 text-black rounded">
+        Tambah
+    </button>
+</form>
+
+{{-- LIST --}}
+<div class="space-y-3 max-w-xl">
+@forelse ($hobbies as $hobby)
+    <div class="flex items-center gap-2">
+
+        {{-- UPDATE --}}
+        <form action="{{ route('admin.portfolio-hobbies.update', $hobby) }}"
+              method="POST"
+              class="flex gap-2 flex-1">
+            @csrf
+            @method('PUT')
+
+            <input name="name"
+                   value="{{ $hobby->name }}"
+                   class="border rounded p-2 flex-1">
+
+            <button class="text-blue-600 text-sm">
+                Update
+            </button>
+        </form>
+
+        {{-- DELETE --}}
+        <form action="{{ route('admin.portfolio-hobbies.destroy', $hobby) }}"
+              method="POST"
+              onsubmit="return confirm('Hapus hobby ini?')">
+            @csrf
+            @method('DELETE')
+            <button class="text-red-600 text-sm">
+                Hapus
+            </button>
+        </form>
+
+    </div>
+@empty
+    <p class="text-gray-500">Belum ada hobby.</p>
+@endforelse
+</div>
+
 @endsection
 
 {{-- JS for Education --}}

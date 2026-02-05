@@ -41,11 +41,9 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <div class="px-4">
+                        <x-dropdown-link :href="route('profile.edit')">
                             <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                             <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-                        </div>
-                        <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
 

@@ -136,6 +136,38 @@
     </div>
 </section>
 
+{{-- LANGUAGES --}}
+<section class="mt-16">
+    <h2 class="text-2xl font-bold mb-6">Languages</h2>
+
+    <div class="flex flex-wrap gap-3">
+        @forelse ($languages as $lang)
+            <span class="px-4 py-2 bg-gray-100 rounded">
+                {{ $lang->name }}
+                @if($lang->level)
+                    - {{ $lang->level }}
+                @endif
+            </span>
+        @empty
+            <p class="text-gray-500">Belum ada language</p>
+        @endforelse
+    </div>
+</section>
+
+{{-- HOBBY --}}
+<section class="mt-16">
+    <h2 class="text-2xl font-bold mb-6">Hobbies</h2>
+
+    <div class="flex flex-wrap gap-3">
+        @forelse ($hobbies as $hobby)
+            <span class="px-4 py-2 bg-gray-100 rounded">
+                {{ $hobby->name }}
+            </span>
+        @empty
+            <p class="text-gray-500">Belum ada hobby</p>
+        @endforelse
+    </div>
+</section>
 
 {{-- POSTS (KECIL AJA) --}}
 <section id="posts" class="mt-20">

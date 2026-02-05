@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Portfolio\PortfolioEducation;
 use App\Models\Portfolio\PortfolioExperience;
+use App\Models\Portfolio\PortfolioHobby;
+use App\Models\Portfolio\PortfolioLanguage;
 use App\Models\Portfolio\PortfolioProfile;
 use App\Models\Portfolio\PortfolioSkill;
 use Illuminate\Http\Request;
@@ -15,11 +17,13 @@ class PortfolioProfileController extends Controller
     public function edit()
     {
         return view('admin.portfolio.edit', [
-        'profile' => PortfolioProfile::firstOrFail(),
-        'skills'  => PortfolioSkill::orderBy('order')->get(),
-        'educations' => PortfolioEducation::orderBy('order')->get(),
-        'experiences' => PortfolioExperience::orderBy('order')->get(),
-    ]);
+            'profile' => PortfolioProfile::firstOrFail(),
+            'skills'  => PortfolioSkill::orderBy('order')->get(),
+            'educations' => PortfolioEducation::orderBy('order')->get(),
+            'experiences' => PortfolioExperience::orderBy('order')->get(),
+            'languages' => PortfolioLanguage::orderBy('order')->get(),
+            'hobbies' => PortfolioHobby::orderBy('order')->get(),
+        ]);
     }
 
     public function update(Request $request)
