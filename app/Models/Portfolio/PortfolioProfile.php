@@ -3,6 +3,7 @@
 namespace App\Models\Portfolio;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Portfolio\PortfolioAddress;
 
 class PortfolioProfile extends Model
 {
@@ -12,6 +13,10 @@ class PortfolioProfile extends Model
         'about',
         'photo',
         'cv',
-        'address',
     ];
+
+    public function address()
+    {
+        return $this->hasOne(PortfolioAddress::class, 'profile_id');
+    }
 }

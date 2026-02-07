@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.*')">
                         Posts
                     </x-nav-link>
+                    <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.*')">
+                        Contact
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -91,6 +94,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.*')">
                 Posts
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.*')">
+                Contact
             </x-responsive-nav-link>
         </div>
 

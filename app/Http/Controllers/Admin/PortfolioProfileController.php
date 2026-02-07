@@ -17,7 +17,7 @@ class PortfolioProfileController extends Controller
     public function edit()
     {
         return view('admin.portfolio.edit', [
-            'profile' => PortfolioProfile::firstOrFail(),
+            'profile' => PortfolioProfile::with('address')->firstOrFail(),
             'skills'  => PortfolioSkill::orderBy('order')->get(),
             'educations' => PortfolioEducation::orderBy('order')->get(),
             'experiences' => PortfolioExperience::orderBy('order')->get(),
@@ -36,7 +36,14 @@ class PortfolioProfileController extends Controller
             'about' => 'nullable',
             'photo' => 'nullable|image|max:4096',
             'cv' => 'nullable|mimes:pdf|max:5120',
-            'address' => 'nullable',
+            'detail_alamat' => 'nullable',
+            'rt' => 'nullable',
+            'rw' => 'nullable',
+            'kelurahan' => 'nullable',
+            'kecamatan' => 'nullable',
+            'kabupaten_kota' => 'nullable',
+            'provinsi' => 'nullable',
+            'kode_pos' => 'nullable',
         ]);
 
         if ($request->hasFile('photo')) {
@@ -50,6 +57,22 @@ class PortfolioProfileController extends Controller
         }
 
         $profile->update($data);
+
+        $addressData = [
+            'detail_alamat' => $data['detail_alamat'] ?? null,
+            'rt' => $data['rt'] ?? null,
+            'rw' => $data['rw'] ?? null,
+            'kelurahan' => $data['kelurahan'] ?? null,
+            'kecamatan' => $data['kecamatan'] ?? null,
+            'kabupaten_kota' => $data['kabupaten_kota'] ?? null,
+            'provinsi' => $data['provinsi'] ?? null,
+            'kode_pos' => $data['kode_pos'] ?? null,
+        ];
+
+        $profile->address()->updateOrCreate(
+            ['profile_id' => $profile->id],
+            $addressData
+        );
 
         return back()->with('success', 'Profile berhasil diperbarui');
     }

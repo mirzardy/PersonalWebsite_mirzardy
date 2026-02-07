@@ -11,12 +11,14 @@ use App\Models\Portfolio\PortfolioSkill;
 use App\Models\Portfolio\PortfolioExperience;
 use App\Models\Portfolio\PortfolioHobby;
 use App\Models\Portfolio\PortfolioLanguage;
+use App\Models\Contact\Contact;
+use App\Models\Contact\Link;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $profile = PortfolioProfile::first();
+        $profile = PortfolioProfile::with('address')->first();
         $skills = PortfolioSkill::orderBy('order')->get();
         $educations = PortfolioEducation::orderBy('order')->get();
         $experiences = PortfolioExperience::orderBy('order')->get();
@@ -25,6 +27,9 @@ class HomeController extends Controller
 
         $posts = Post::latest()->limit(3)->get();
 
-        return view('home', compact('profile', 'skills', 'educations', 'experiences', 'languages', 'hobbies', 'posts'));
+        $contact = Contact::first();
+        $links = Link::all();
+
+        return view('home', compact('profile', 'skills', 'educations', 'experiences', 'languages', 'hobbies', 'posts', 'contact', 'links'));
     }
 }

@@ -12,7 +12,18 @@
                 <h1>{{ $profile->name }}</h1>
                 <p>{{ $profile->headline }}</p>
                 <p class="text-sm text-gray-500">
-                    {{ $profile->address }}
+                    @php
+                        $address = $profile->address;
+                        $addressParts = $address ? array_filter([
+                            $address->detail_alamat,
+                            $address->kelurahan,
+                            $address->kecamatan,
+                            $address->kabupaten_kota,
+                            $address->provinsi,
+                            $address->kode_pos,
+                        ]) : [];
+                    @endphp
+                    {{ $addressParts ? implode(', ', $addressParts) : '-' }}
                 </p>
             @else
                 <p class="text-gray-500">Profile belum diatur</p>
@@ -166,6 +177,70 @@
         @empty
             <p class="text-gray-500">Belum ada hobby</p>
         @endforelse
+    </div>
+</section>
+
+{{-- CONTACT & LINKS --}}
+<section class="mt-20">
+    <h2 class="text-2xl font-bold mb-6">Contact & Links</h2>
+
+    <div class="grid md:grid-cols-2 gap-10">
+
+        {{-- CONTACT INFO --}}
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Contact</h3>
+
+            @if ($contact)
+
+                @if ($contact->email)
+                    <a href="mailto:mirza.ok0010@gmail.com">
+                        <p class="text-gray-700">
+                            📧 {{ $contact->email }}
+                        </p>
+                    </a>
+                @endif
+
+                @if ($contact->phone)
+                    <p class="text-gray-700">
+                        📞 {{ $contact->phone }}
+                    </p>
+                @endif
+
+                @if ($contact->whatsapp)
+                    <p class="text-gray-700">
+                        WhatsApp : {{ $contact->whatsapp }}
+                    </p>
+                @endif
+
+                 @if ($contact->telegram)
+                    <p class="text-gray-700">
+                        Telegram : {{ $contact->telegram }}
+                    </p>
+                @endif
+
+            @else
+                <p class="text-gray-500">Contact belum diatur</p>
+            @endif
+        </div>
+
+
+        {{-- LINKS --}}
+        <div class="space-y-4">
+            <h3 class="text-lg font-semibold">Find Me Online</h3>
+
+            <div class="flex flex-wrap gap-3">
+                @forelse ($links as $link)
+                    <a href="{{ $link->url }}"
+                       target="_blank"
+                       class="px-4 py-2 border rounded hover:bg-gray-100 transition">
+                        {{ $link->name }}
+                    </a>
+                @empty
+                    <p class="text-gray-500">Belum ada link</p>
+                @endforelse
+            </div>
+        </div>
+
     </div>
 </section>
 

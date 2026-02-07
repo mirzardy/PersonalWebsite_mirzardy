@@ -33,9 +33,64 @@
     </div>
 
     <div>
-        <label class="block mb-1">Alamat</label>
-        <textarea name="address" rows="6"
-                  class="w-full border rounded p-2">{{ old('address', $profile->address) }}</textarea>
+        <label class="block mb-1">Detail Alamat</label>
+        <textarea name="detail_alamat" rows="3"
+                  class="w-full border rounded p-2">{{ old('detail_alamat', optional($profile->address)->detail_alamat) }}</textarea>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+        <div>
+            <label class="block mb-1">RT</label>
+            <input type="text" name="rt"
+                   value="{{ old('rt', optional($profile->address)->rt) }}"
+                   class="w-full border rounded p-2">
+        </div>
+
+        <div>
+            <label class="block mb-1">RW</label>
+            <input type="text" name="rw"
+                   value="{{ old('rw', optional($profile->address)->rw) }}"
+                   class="w-full border rounded p-2">
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+        <div>
+            <label class="block mb-1">Kelurahan</label>
+            <input type="text" name="kelurahan"
+                   value="{{ old('kelurahan', optional($profile->address)->kelurahan) }}"
+                   class="w-full border rounded p-2">
+        </div>
+
+        <div>
+            <label class="block mb-1">Kecamatan</label>
+            <input type="text" name="kecamatan"
+                   value="{{ old('kecamatan', optional($profile->address)->kecamatan) }}"
+                   class="w-full border rounded p-2">
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+        <div>
+            <label class="block mb-1">Kabupaten/Kota</label>
+            <input type="text" name="kabupaten_kota"
+                   value="{{ old('kabupaten_kota', optional($profile->address)->kabupaten_kota) }}"
+                   class="w-full border rounded p-2">
+        </div>
+
+        <div>
+            <label class="block mb-1">Provinsi</label>
+            <input type="text" name="provinsi"
+                   value="{{ old('provinsi', optional($profile->address)->provinsi) }}"
+                   class="w-full border rounded p-2">
+        </div>
+    </div>
+
+    <div>
+        <label class="block mb-1">Kode Pos</label>
+        <input type="text" name="kode_pos"
+               value="{{ old('kode_pos', optional($profile->address)->kode_pos) }}"
+               class="w-full border rounded p-2">
     </div>
 
     <div>
@@ -533,4 +588,3 @@ function cancelExperienceEdit() {
     document.getElementById('expCancelBtn').classList.add('hidden');
 }
 </script>
-

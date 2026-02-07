@@ -43,6 +43,10 @@
             <a href="/admin/posts" class="block px-4 py-2 rounded hover:bg-gray-100">
                 Post
             </a>
+            <a href="/admin/contacts" class="block px-4 py-2 rounded hover:bg-gray-100">
+                Contact
+            </a>
+
         </nav>
     </aside>
 

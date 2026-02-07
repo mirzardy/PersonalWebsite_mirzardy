@@ -10,8 +10,12 @@ use App\Http\Controllers\Admin\PortfolioEducationController;
 use App\Http\Controllers\Admin\PortfolioExperienceController;
 use App\Http\Controllers\Admin\PortfolioLanguageController;
 use App\Http\Controllers\Admin\PortfolioHobbyController;
+use App\Http\Controllers\Admin\ContactController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
+use App\Models\Portfolio\PortfolioProfile;
+use App\Models\Contact\Contact;
+use App\Models\Contact\Link;
 
 // Auth Login
 Route::middleware('auth')->group(function () {
@@ -27,10 +31,13 @@ Route::middleware(['auth', 'admin'])
     ->name('admin.')
     ->group(function () {
 
+        // DASHBOARD
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
+        // POSTS
         Route::resource('posts', PostController::class);
 
+        // PORTFOLIO
         Route::get('portfolio', [PortfolioProfileController::class, 'edit'])->name('portfolio.edit');
         Route::put('portfolio', [PortfolioProfileController::class, 'update'])->name('portfolio.update');
 
@@ -52,6 +59,22 @@ Route::middleware(['auth', 'admin'])
         Route::resource('portfolio-hobbies', PortfolioHobbyController::class)
             ->except(['create','edit','show']);
 
+        // CONTACT
+        Route::get('contacts', [ContactController::class, 'index'])
+            ->name('contacts.index');
+
+        Route::put('contacts', [ContactController::class, 'updateContact'])
+            ->name('contacts.update');
+
+        // LINKS
+        Route::post('links', [ContactController::class, 'storeLink'])
+            ->name('links.store');
+
+        Route::put('links/{link}', [ContactController::class, 'updateLink'])
+            ->name('links.update');
+
+        Route::delete('links/{link}', [ContactController::class, 'destroyLink'])
+            ->name('links.destroy');
 
 });
 
@@ -65,6 +88,14 @@ Route::get('/posts', function () {
 Route::get('/posts/{post:slug}', function (Post $post) {
     return view('posts.show', compact('post'));
 })->name('posts.show');
+
+Route::get('/contact', function () {
+    return view('contact.index', [
+        'contact' => Contact::first(),
+        'links' => Link::all(),
+        'profile' => PortfolioProfile::with('address')->first(),
+    ]);
+})->name('contact.index');
 
 
 require __DIR__.'/auth.php';
