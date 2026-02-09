@@ -71,7 +71,7 @@
            required>
 
     <input name="url"
-           placeholder="https://..."
+           value="https://"
            class="border rounded p-2 flex-1"
            required>
 

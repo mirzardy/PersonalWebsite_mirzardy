@@ -1,38 +1,74 @@
 @extends('layouts.app')
 
 @section('content')
-<section id="contact" class="py-16">
-    <div class="container mx-auto max-w-3xl">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+    <div class="text-center">
+        <h2 class="text-3xl font-semibold tracking-tight">Contact Me</h2>
+        <p class="text-sm text-gray-500 mt-2">Silakan hubungi saya melalui detail di bawah ini.</p>
+    </div>
 
-        <h2 class="text-3xl font-bold mb-6 text-center">
-            Contact Me
-        </h2>
+    @php
+        $address = $profile?->address;
+    @endphp
 
+    <div class="grid lg:grid-cols-2 gap-6">
         {{-- Contact Info --}}
-        @php
-            $address = $profile?->address;
-        @endphp
-        <div class="mb-8 text-center">
-            <p>Email: {{ $contact->email ?? '-' }}</p>
-            <p>Phone: {{ $contact->phone ?? '-' }}</p>
-            <p>Detail: {{ $address->detail_alamat ?? '-' }}</p>
-            <p>RT/RW: {{ $address->rt ?? '-' }}/{{ $address->rw ?? '-' }}</p>
-            <p>Kelurahan: {{ $address->kelurahan ?? '-' }}</p>
-            <p>Kecamatan: {{ $address->kecamatan ?? '-' }}</p>
-            <p>Kabupaten/Kota: {{ $address->kabupaten_kota ?? '-' }}</p>
-            <p>Provinsi: {{ $address->provinsi ?? '-' }}</p>
-            <p>Kode Pos: {{ $address->kode_pos ?? '-' }}</p>
-        </div>
+        <section class="bg-white border border-gray-200 rounded-2xl p-6">
+            <h3 class="text-lg font-semibold">Contact Info</h3>
+            <div class="mt-4 grid sm:grid-cols-2 gap-4 text-sm">
+                <div>
+                    <p class="text-gray-500">Email</p>
+                    <p class="font-medium text-gray-800">{{ $contact->email ?? '-' }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500">Phone</p>
+                    <p class="font-medium text-gray-800">{{ $contact->phone ?? '-' }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500">Detail</p>
+                    <p class="font-medium text-gray-800">{{ $address->detail_alamat ?? '-' }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500">RT/RW</p>
+                    <p class="font-medium text-gray-800">{{ $address->rt ?? '-' }}/{{ $address->rw ?? '-' }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500">Kelurahan</p>
+                    <p class="font-medium text-gray-800">{{ $address->kelurahan ?? '-' }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500">Kecamatan</p>
+                    <p class="font-medium text-gray-800">{{ $address->kecamatan ?? '-' }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500">Kabupaten/Kota</p>
+                    <p class="font-medium text-gray-800">{{ $address->kabupaten_kota ?? '-' }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500">Provinsi</p>
+                    <p class="font-medium text-gray-800">{{ $address->provinsi ?? '-' }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500">Kode Pos</p>
+                    <p class="font-medium text-gray-800">{{ $address->kode_pos ?? '-' }}</p>
+                </div>
+            </div>
+        </section>
 
         {{-- Social Links --}}
-        <div class="flex justify-center gap-4 mb-10">
-            @foreach($links as $link)
-                <a href="{{ $link->url }}" target="_blank"
-                   class="px-4 py-2 bg-gray-200 rounded">
-                    {{ $link->name }}
-                </a>
-            @endforeach
-        </div>
+        <section class="bg-white border border-gray-200 rounded-2xl p-6">
+            <h3 class="text-lg font-semibold">Social Links</h3>
+            <div class="mt-4 flex flex-wrap gap-2">
+                @forelse($links as $link)
+                    <a href="{{ $link->url }}" target="_blank"
+                       class="px-4 py-2 text-sm border border-gray-300 rounded-full hover:bg-gray-50">
+                        {{ $link->name }}
+                    </a>
+                @empty
+                    <p class="text-gray-500 text-sm">Belum ada link sosial.</p>
+                @endforelse
+            </div>
+        </section>
     </div>
-</section>
+</div>
 @endsection

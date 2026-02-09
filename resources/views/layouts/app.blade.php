@@ -7,20 +7,17 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
+
     <script>
-        // Simpan posisi scroll sebelum submit
         document.addEventListener('submit', function () {
             localStorage.setItem('scrollY', window.scrollY);
         });
 
-        // Kembalikan posisi scroll setelah reload
         window.addEventListener('load', function () {
             const scrollY = localStorage.getItem('scrollY');
             if (scrollY !== null) {
@@ -29,23 +26,27 @@
             }
         });
     </script>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
 
-            <!-- Page Heading -->
+    <body class="font-sans antialiased">
+        <div class="min-h-screen bg-gray-50 flex flex-col">
+
+            @include('layouts.navigation')
+            <div class="h-16"></div>
+
             @isset($header)
-                <header class="bg-white shadow">
+                <header class="bg-white shadow z-10 relative">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
             @endisset
 
-            <!-- Page Content -->
-            <main style="padding-top: 64px;">
+            <main class="flex-grow">
                 @yield('content')
             </main>
+
+            @include('layouts.footer')
+
         </div>
     </body>
 </html>
