@@ -14,7 +14,7 @@
 
     <h1 class="text-2xl font-bold text-gray-900 mb-6">Edit Category</h1>
 
-    <form action="{{ route('admin.project-categories.update', $projectCategory->id) }}" method="POST" class="space-y-6">
+    <form action="{{ route('admin.project-categories.update', $projectCategory) }}" method="POST" class="space-y-6">
         @csrf
         @method('PUT')
 
