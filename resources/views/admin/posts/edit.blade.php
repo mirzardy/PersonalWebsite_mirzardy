@@ -46,6 +46,20 @@
             @enderror
         </div>
 
+        <!-- Category -->
+        <div>
+            <label class="block font-medium">Category (Project)</label>
+            <select name="category_id" class="w-full border rounded p-2">
+                <option value="">-- Select Category --</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ old('category_id', $post->category_id) == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+            <p class="text-gray-500 text-sm mt-1">Pilih kategori jika post ini adalah project</p>
+        </div>
+
         <!-- Content -->
         <div>
             <label class="block font-medium">Content</label>

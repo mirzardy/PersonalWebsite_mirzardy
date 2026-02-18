@@ -5,6 +5,21 @@
     <title>Admin Dashboard</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+<script>
+    // Simpan posisi scroll sebelum submit
+    document.addEventListener('submit', function () {
+        localStorage.setItem('scrollY', window.scrollY);
+    });
+
+    // Kembalikan posisi scroll setelah reload
+    window.addEventListener('load', function () {
+        const scrollY = localStorage.getItem('scrollY');
+        if (scrollY !== null) {
+            window.scrollTo(0, scrollY);
+            localStorage.removeItem('scrollY');
+        }
+    });
+</script>
 <body class="bg-gray-100">
 
 <div class="min-h-screen flex">
@@ -22,9 +37,19 @@
             <a href="/" class="block px-4 py-2 rounded hover:bg-gray-100">
                 Home
             </a>
+            <a href="/admin/portfolio" class="block px-4 py-2 rounded hover:bg-gray-100">
+                Portfolio
+            </a>
             <a href="/admin/posts" class="block px-4 py-2 rounded hover:bg-gray-100">
                 Post
             </a>
+            <a href="/admin/project-categories" class="block px-4 py-2 rounded hover:bg-gray-100">
+                Project Categories
+            </a>
+            <a href="/admin/contacts" class="block px-4 py-2 rounded hover:bg-gray-100">
+                Contact
+            </a>
+
         </nav>
     </aside>
 

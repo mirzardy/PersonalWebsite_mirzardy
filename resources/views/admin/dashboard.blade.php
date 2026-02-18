@@ -50,7 +50,7 @@
                 </span>
             @else
                 <span class="px-3 py-1 text-xs rounded bg-black text-black">
-                    User
+                    Visitor
                 </span>
             @endif
         </div>
