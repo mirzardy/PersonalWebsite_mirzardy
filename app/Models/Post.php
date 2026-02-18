@@ -14,6 +14,7 @@ class Post extends Model
         'content',
         'image',
         'user_id',
+        'category_id',
     ];
 
     protected static function booted()
@@ -37,5 +38,10 @@ class Post extends Model
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(ProjectCategory::class, 'category_id');
     }
 }

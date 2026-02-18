@@ -11,11 +11,13 @@ use App\Http\Controllers\Admin\PortfolioExperienceController;
 use App\Http\Controllers\Admin\PortfolioLanguageController;
 use App\Http\Controllers\Admin\PortfolioHobbyController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\ProjectCategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 use App\Models\Portfolio\PortfolioProfile;
 use App\Models\Contact\Contact;
 use App\Models\Contact\Link;
+use App\Models\ProjectCategory;
 
 // Auth Login
 Route::middleware('auth')->group(function () {
@@ -76,6 +78,10 @@ Route::middleware(['auth', 'admin'])
         Route::delete('links/{link}', [ContactController::class, 'destroyLink'])
             ->name('links.destroy');
 
+        // PROJECT CATEGORIES
+        Route::resource('project-categories', ProjectCategoryController::class)
+            ->except(['show']);
+
 });
 
 // Public
@@ -96,6 +102,20 @@ Route::get('/contact', function () {
         'profile' => PortfolioProfile::with('address')->first(),
     ]);
 })->name('contact.index');
+
+// PROJECTS (using posts as projects)
+Route::get('/projects', function () {
+    return view('projects.index', [
+        'categories' => ProjectCategory::with('posts')->get(),
+    ]);
+})->name('projects.index');
+
+Route::get('/projects/{projectCategory:slug}', function (ProjectCategory $projectCategory) {
+    return view('projects.show', [
+        'category' => $projectCategory,
+        'posts' => $projectCategory->posts()->latest()->get(),
+    ]);
+})->name('projects.show');
 
 
 require __DIR__.'/auth.php';

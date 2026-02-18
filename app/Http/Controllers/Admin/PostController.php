@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\ProjectCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,9 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('admin.posts.create');
+        return view('admin.posts.create', [
+            'categories' => \App\Models\ProjectCategory::all()
+        ]);
     }
 
     public function store(Request $request)
@@ -30,6 +33,7 @@ class PostController extends Controller
             'excerpt' => 'required|max:255',
             'content' => 'required',
             'image' => 'nullable|image|mimes:png,jpg,jpeg',
+            'category_id' => 'nullable|exists:project_categories,id',
         ]);
 
         if ($request->hasFile('image')) {
@@ -51,7 +55,10 @@ class PostController extends Controller
 
    public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        return view('admin.posts.edit', [
+            'post' => $post,
+            'categories' => \App\Models\ProjectCategory::all()
+        ]);
     }
 
     public function update(Request $request, Post $post)
@@ -60,7 +67,8 @@ class PostController extends Controller
             'title' => 'required|max:48',
             'excerpt' => 'required|max:255',
             'content' => 'required',
-            'image' => 'nullable|image|mimes:png,jpg,jpeg'
+            'image' => 'nullable|image|mimes:png,jpg,jpeg',
+            'category_id' => 'nullable|exists:project_categories,id',
         ]);
 
         if ($request->title !== $post->title) {

@@ -30,6 +30,44 @@
                             <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-indigo-600 rounded-full"></span>
                         @endif
                     </x-nav-link>
+
+                    {{-- My Project Dropdown --}}
+                    <x-dropdown align="left" width="48">
+                        <x-slot name="trigger">
+                            <button class="inline-flex items-center px-4 py-2 text-gray-600 hover:text-gray-900 font-medium transition-colors">
+                                My Project
+                                <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </x-slot>
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('projects.index')" class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                </svg>
+                                All Projects
+                            </x-dropdown-link>
+                            <div class="border-t border-gray-100 my-1"></div>
+                            @php
+                                $projectCategories = App\Models\ProjectCategory::withCount('posts')->having('posts_count', '>', 0)->get();
+                            @endphp
+                            @forelse($projectCategories as $category)
+                                <x-dropdown-link :href="route('projects.show', $category->slug)" class="flex items-center gap-2">
+                                    @if($category->color)
+                                        <span class="w-3 h-3 rounded-full" style="background-color: {{ $category->color }}"></span>
+                                    @endif
+                                    {{ $category->name }}
+                                    <span class="ml-auto text-xs text-gray-400">{{ $category->posts_count }}</span>
+                                </x-dropdown-link>
+                            @empty
+                                <div class="px-4 py-2 text-sm text-gray-500">
+                                    No categories yet
+                                </div>
+                            @endforelse
+                        </x-slot>
+                    </x-dropdown>
+
                     <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.*')" class="relative px-4 py-2 text-gray-600 hover:text-gray-900 font-medium transition-colors">
                         Contact
                         @if(request()->routeIs('contact.*'))
@@ -101,7 +139,7 @@
                             </svg>
                             Login
                         </a>
-                        <a href="{{ route('register') }}" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-medium rounded-full hover:from-indigo-600 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg">
+                        <a href="{{ route('register') }}" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-black font-medium rounded-full hover:from-indigo-600 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg">
                             Register
                         </a>
                     </div>
@@ -128,6 +166,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.*')">
                 Posts
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.*')">
+                My Project
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.*')">
                 Contact

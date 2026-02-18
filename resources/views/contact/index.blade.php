@@ -165,7 +165,7 @@
 
     {{-- Quick Message CTA --}}
     <div class="mt-12 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-xl p-8 md:p-12 text-center">
-        <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">Punya Pertanyaan?</h3>
+        <h3 class="text-2xl md:text-3xl font-bold text-black mb-4">Punya Pertanyaan?</h3>
         <p class="text-gray-300 mb-8 max-w-2xl mx-auto">
             Jangan ragu untuk mengirim email langsung. Saya biasanya merespons dalam 24-48 jam.
         </p>
