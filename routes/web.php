@@ -88,7 +88,7 @@ Route::middleware(['auth', 'admin'])
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/posts', function () {
     return view('posts.index', [
-        'posts' => Post::latest()->get(),
+        'posts' => Post::doesntHave('category')->latest()->get(),
     ]);
 })->name('posts.index');
 Route::get('/posts/{post:slug}', function (Post $post) {

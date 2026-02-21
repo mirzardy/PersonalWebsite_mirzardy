@@ -12,7 +12,7 @@
         </a>
     </div>
 
-    <h1 class="text-2xl font-bold text-gray-900 mb-6">Create Category</h1>
+    <h1 class="text-2xl font-bold text-black mb-6">Create Category</h1>
 
     <form action="{{ route('admin.project-categories.store') }}" method="POST" class="space-y-6">
         @csrf
@@ -41,11 +41,11 @@
             <div class="flex items-center gap-3">
                 <input type="color" name="color" id="color"
                        class="w-12 h-12 p-1 border border-gray-300 rounded-lg cursor-pointer"
-                       value="{{ old('color', '#6366f1') }}">
+                       value="{{ old('color', '#220469') }}">
                 <input type="text" name="color_text" id="color_text"
                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                       value="{{ old('color', '#6366f1') }}"
-                       placeholder="#6366f1">
+                       value="{{ old('color', '#220469') }}"
+                       placeholder="#220469">
             </div>
             <p class="mt-1 text-sm text-gray-500">Choose a color for this category</p>
             @error('color')

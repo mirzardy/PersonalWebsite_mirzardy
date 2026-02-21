@@ -46,7 +46,7 @@
                 <input type="text" name="color_text" id="color_text"
                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
                        value="{{ old('color', $projectCategory->color) }}"
-                       placeholder="#6366f1">
+                       placeholder="#220469">
             </div>
             <p class="mt-1 text-sm text-gray-500">Choose a color for this category</p>
             @error('color')

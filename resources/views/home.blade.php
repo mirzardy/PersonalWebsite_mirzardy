@@ -115,9 +115,9 @@
             </div>
             <h2 class="text-3xl font-bold text-gray-900">Skills</h2>
         </div>
-        <div class="flex flex-wrap gap-3">
+        <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-start sm:gap-3">
             @forelse ($skills as $skill)
-                <span class="px-4 py-2 bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-xl text-gray-700 font-medium hover:from-blue-50 hover:to-blue-100 hover:border-blue-200 hover:text-blue-700 transition-all duration-300 shadow-sm hover:shadow-md">
+                <span class="block w-full min-w-0 px-3 sm:px-4 py-2 bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-xl text-gray-700 text-sm sm:text-base font-medium text-center sm:text-left whitespace-normal break-words hover:from-blue-50 hover:to-blue-100 hover:border-blue-200 hover:text-blue-700 transition-all duration-300 shadow-sm hover:shadow-md">
                     {{ $skill->name }}
                 </span>
             @empty

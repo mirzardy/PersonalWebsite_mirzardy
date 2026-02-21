@@ -14,7 +14,7 @@
             Latest Posts
         </h1>
         <p class="text-lg text-gray-500 max-w-2xl mx-auto">
-            Kumpulan tulisan terbaru tentang teknologi, programming, dan pengalaman saya.
+            Kumpulan tulisan terbaru selain project saya tentang teknologi, programming, dan pengalaman saya.
         </p>
     </div>
 

@@ -83,18 +83,20 @@
             <div>
                 <h3 class="text-sm font-semibold text-black uppercase tracking-wider mb-4">Kategori</h3>
                 <ul class="space-y-3 text-sm">
-                    <li>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Programming</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Web Development</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Laravel</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Tutorial</a>
-                    </li>
+                    @php
+                        $footerCategories = App\Models\ProjectCategory::orderBy('name')->get();
+                    @endphp
+                    @forelse ($footerCategories as $category)
+                        <li>
+                            <a href="{{ route('projects.show', $category->slug) }}" class="text-gray-400 hover:text-white transition-colors">
+                                {{ $category->name }}
+                            </a>
+                        </li>
+                    @empty
+                        <li>
+                            <span class="text-gray-500">Belum ada kategori</span>
+                        </li>
+                    @endforelse
                 </ul>
             </div>
         </div>

@@ -81,7 +81,7 @@
 
             {{-- Content --}}
             <div class="prose prose-lg prose-indigo max-w-none text-gray-800">
-                {!! nl2br(e($post->content)) !!}
+                {!! nl2br($post->content) !!}
             </div>
 
             {{-- Share section --}}
