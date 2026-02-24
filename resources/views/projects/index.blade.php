@@ -6,7 +6,7 @@
     <section class="text-center mb-12">
         <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">My Projects</h1>
         <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-            Explore my portfolio of projects across different categories including programming, web development, Laravel, and tutorials.
+            Ini adalah kumpulan project yang sudah atau sedang saya kerjakan, meliputi laravel, web developing, tutorial, dan lainnya.
         </p>
     </section>
 

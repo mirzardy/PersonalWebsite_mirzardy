@@ -25,7 +25,7 @@ class HomeController extends Controller
         $languages = PortfolioLanguage::orderBy('order')->get();
         $hobbies = PortfolioHobby::orderBy('order')->get();
 
-        $posts = Post::latest()->limit(3)->get();
+        $posts = Post::doesntHave('category')->latest()->limit(3)->get();
 
         $contact = Contact::first();
         $links = Link::all();
